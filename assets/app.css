@@ -13,12 +13,14 @@ body {
   margin: 0;
   font-family: var(--font);
   background: var(--page);
+  background-image: var(--page-image, none);
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--series-1); }
+a { color: var(--accent); }
 
 .wrap {
   max-width: 980px;
@@ -38,8 +40,9 @@ a { color: var(--series-1); }
 }
 
 .site-title {
-  font-size: 1.35rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: var(--heading-weight, 600);
   margin: 0;
   letter-spacing: -0.01em;
 }
@@ -73,7 +76,7 @@ a { color: var(--series-1); }
   font: inherit;
   font-size: 0.85rem;
   padding: 7px 13px;
-  border-radius: 8px;
+  border-radius: var(--control-radius);
   border: 1px solid var(--border);
   background: var(--surface-1);
   color: var(--text-primary);
@@ -86,8 +89,8 @@ a { color: var(--series-1); }
 
 .btn[aria-pressed="true"],
 .btn.is-active {
-  background: var(--series-1);
-  border-color: var(--series-1);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -103,8 +106,9 @@ a { color: var(--series-1); }
 
 .hero-value {
   /* Proportional figures: tabular-nums makes a large number look loose. */
-  font-size: 4rem;
-  font-weight: 600;
+  font-family: var(--font-figure);
+  font-size: 4.4rem;
+  font-weight: var(--heading-weight, 600);
   line-height: 1;
   letter-spacing: -0.03em;
 }
@@ -128,8 +132,9 @@ a { color: var(--series-1); }
 
 .tile {
   background: var(--surface-1);
-  border: 1px solid var(--border);
+  border: var(--card-border);
   border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
   padding: 14px 16px;
 }
 
@@ -140,8 +145,9 @@ a { color: var(--series-1); }
 }
 
 .tile-value {
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-family: var(--font-figure);
+  font-size: 1.7rem;
+  font-weight: var(--heading-weight, 600);
   letter-spacing: -0.02em;
 }
 
@@ -151,8 +157,9 @@ a { color: var(--series-1); }
 
 .card {
   background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
   padding: 18px 20px 22px;
   margin-bottom: 20px;
 }
@@ -165,7 +172,12 @@ a { color: var(--series-1); }
   margin-bottom: 4px;
 }
 
-.card-title { font-size: 0.98rem; font-weight: 600; margin: 0; }
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: var(--heading-weight, 600);
+  margin: 0;
+}
 .card-sub { font-size: 0.82rem; color: var(--text-secondary); margin: 0 0 16px; }
 
 /* Let the card grow with its content so the x-axis band is never cut off. */
@@ -387,8 +399,9 @@ table.data tbody tr:hover { background: var(--page); }
 /* ---------- section headings ---------- */
 
 .section-head {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: var(--heading-weight, 600);
   margin: 40px 0 4px;
   letter-spacing: -0.01em;
 }
@@ -480,7 +493,54 @@ table.data tbody tr:hover { background: var(--page); }
   border-radius: 4px;
 }
 
-.disclosure-title { font-size: 0.98rem; font-weight: 600; }
+.disclosure-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: var(--heading-weight, 600); }
 .disclosure-sub { font-size: 0.82rem; color: var(--text-secondary); }
 
 .disclosure[open] > summary { margin-bottom: 2px; }
+
+
+/* ---------- cursor butterflies and glitter (Barbie theme) ---------- */
+
+.sparkle-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  overflow: hidden;
+}
+
+.butterfly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.butterfly .wing {
+  transform-origin: center;
+  animation: bt-flutter 320ms ease-in-out infinite;
+}
+
+.sparkle {
+  position: absolute;
+  border-radius: 50%;
+  animation: bt-sparkle 900ms ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes bt-flutter {
+  0%, 100% { transform: rotate(-9deg) scaleX(1); }
+  50%      { transform: rotate(9deg) scaleX(0.72); }
+}
+
+@keyframes bt-sparkle {
+  0%   { transform: scale(0); opacity: 0; }
+  25%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.2); opacity: 0; }
+}
+
+/* A trail that follows the pointer is exactly what this setting exists to
+   stop, so it stops completely rather than merely slowing down. */
+@media (prefers-reduced-motion: reduce) {
+  .sparkle-layer { display: none; }
+}

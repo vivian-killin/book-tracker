@@ -1,96 +1,182 @@
 /*
- * Design tokens.
+ * Design tokens, in three themes.
  *
- * Chart colors are roles, never raw hex at the call site, so light and dark
- * swap in one place. The dark column is the same hues re-stepped for the dark
- * surface — not an automatic inversion — and both modes are validated against
- * their own surface (see tests/palette-check.html).
+ * Everything visual lives here: colours, type, radii, the shape of a bar. A
+ * look changes by editing this file; nothing in the charts or the controllers
+ * needs to know which theme is on.
+ *
+ * The chart colours are not decoration and are not chosen by eye. Each theme's
+ * series colours and heatmap ramp are checked against that theme's own surface
+ * for colour-blind separation and contrast — see assets/js/palette.js, run by
+ * tests.html. A theme that fails those checks fails the test run.
  */
 
-:root {
+:root,
+:root[data-theme="barbie"] {
   color-scheme: light;
 
-  /* Chrome & ink */
-  --surface-1: #fcfcfb;
-  --page: #f9f9f7;
-  --text-primary: #0b0b0b;
-  --text-secondary: #52514e;
-  --text-muted: #898781;
-  --gridline: #e1e0d9;
-  --baseline: #c3c2b7;
-  --border: rgba(11, 11, 11, 0.1);
-  --success: #006300;
+  --font-display: Pacifico, 'Brush Script MT', cursive;
+  --font-figure: Fredoka, 'Trebuchet MS', sans-serif;
+  --font: Quicksand, 'Trebuchet MS', system-ui, sans-serif;
 
-  /* Categorical slots, in fixed order. Never reassign by rank. */
+  --page: #fff0f6;
+  --page-image: linear-gradient(168deg, #fff0f6 0%, #ffe3f1 46%, #ffd9ef 100%);
+  --surface-1: #fffafc;
+  --text-primary: #4a1130;
+  --text-secondary: #6b1c46;
+  --text-muted: #b06390;
+  --gridline: #ffdcee;
+  --baseline: #ffc6e3;
+  --border: #ffc6e3;
+  --success: #0f766e;
+  --accent: #d6187e;
+
+  /* Categorical: magenta against violet. Passes both colour-blind checks and
+     3:1 contrast on the pink surface. */
+  --series-1: #d6187e;
+  --series-2: #7c3aed;
+  --series-3: #0f766e;
+
+  /* seq-0 is the empty cell: off-ramp on purpose, so "no books" cannot be
+     mistaken for "a few books". */
+  --seq-0: #f3e6ec;
+  --seq-1: #f472b6;
+  --seq-2: #ec4899;
+  --seq-3: #db2777;
+  --seq-4: #be185d;
+  --seq-5: #831843;
+
+  --radius: 26px;
+  --card-radius: 30px;
+  --card-border: 2px solid var(--border);
+  --card-shadow: 0 10px 26px rgba(214, 24, 126, 0.10);
+  --bar-radius: 999px 999px 6px 6px;
+  --bar-fill: linear-gradient(180deg, #f472b6, #d6187e);
+  --cell-radius: 7px;
+  --control-radius: 999px;
+  --heading-weight: 400;
+  --playful: 1;
+}
+
+:root[data-theme="warm"] {
+  color-scheme: light;
+
+  --font-display: Newsreader, Georgia, serif;
+  --font-figure: Newsreader, Georgia, serif;
+  --font: Karla, 'Helvetica Neue', system-ui, sans-serif;
+
+  --page: #faf7f2;
+  --page-image: none;
+  --surface-1: #fffdf8;
+  --text-primary: #241f1a;
+  --text-secondary: #4f463d;
+  --text-muted: #8a7f72;
+  --gridline: #ece5d9;
+  --baseline: #d8cfc2;
+  --border: #e2dbd0;
+  --success: #006300;
+  --accent: #8d400c;
+
   --series-1: #2a78d6;
   --series-2: #eb6834;
   --series-3: #1baf7a;
 
-  /*
-   * Sequential blue ramp for magnitude (the year heatmap), light -> dark.
-   * seq-0 is the empty cell: a neutral gray, deliberately off-ramp so "no
-   * books" never reads as "a few books". seq-1 starts a step in from the
-   * lightest blue to stay separable from that gray.
-   */
-  --seq-0: #f0efec;
-  --seq-1: #86b6ef;
-  --seq-2: #5598e7;
-  --seq-3: #2a78d6;
-  --seq-4: #1c5cab;
+  --seq-0: #ece5d9;
+  --seq-1: #6da7ec;
+  --seq-2: #3987e5;
+  --seq-3: #256abf;
+  --seq-4: #184f95;
   --seq-5: #0d366b;
 
   --radius: 10px;
-  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --card-radius: 12px;
+  --card-border: 1px solid var(--border);
+  --card-shadow: none;
+  --bar-radius: 4px 4px 0 0;
+  --bar-fill: var(--series-1);
+  --cell-radius: 3px;
+  --control-radius: 8px;
+  --heading-weight: 400;
+  --playful: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-
-    --surface-1: #1a1a19;
-    --page: #0d0d0d;
-    --text-primary: #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted: #898781;
-    --gridline: #2c2c2a;
-    --baseline: #383835;
-    --border: rgba(255, 255, 255, 0.1);
-    --success: #0ca30c;
-
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --series-3: #199e70;
-
-    --seq-0: #383835;
-    --seq-1: #184f95;
-    --seq-2: #256abf;
-    --seq-3: #3987e5;
-    --seq-4: #6da7ec;
-    --seq-5: #9ec5f4;
-  }
-}
-
-:root[data-theme="dark"] {
+:root[data-theme="night"] {
   color-scheme: dark;
 
-  --surface-1: #1a1a19;
-  --page: #0d0d0d;
-  --text-primary: #ffffff;
-  --text-secondary: #c3c2b7;
-  --text-muted: #898781;
-  --gridline: #2c2c2a;
-  --baseline: #383835;
-  --border: rgba(255, 255, 255, 0.1);
+  --font-display: Newsreader, Georgia, serif;
+  --font-figure: Newsreader, Georgia, serif;
+  --font: Karla, 'Helvetica Neue', system-ui, sans-serif;
+
+  --page: #16130f;
+  --page-image: none;
+  --surface-1: #1c1917;
+  --text-primary: #f4efe7;
+  --text-secondary: #cdc3b6;
+  --text-muted: #8f8478;
+  --gridline: #2a231d;
+  --baseline: #3d342b;
+  --border: #332c25;
   --success: #0ca30c;
+  --accent: #f0a875;
 
   --series-1: #3987e5;
   --series-2: #d95926;
   --series-3: #199e70;
 
-  --seq-0: #383835;
+  --seq-0: #241f1a;
   --seq-1: #184f95;
   --seq-2: #256abf;
   --seq-3: #3987e5;
   --seq-4: #6da7ec;
   --seq-5: #9ec5f4;
+
+  --radius: 10px;
+  --card-radius: 12px;
+  --card-border: 1px solid var(--border);
+  --card-shadow: none;
+  --bar-radius: 4px 4px 0 0;
+  --bar-fill: var(--series-1);
+  --cell-radius: 3px;
+  --control-radius: 8px;
+  --heading-weight: 400;
+  --playful: 0;
+}
+
+/* No stored choice and a dark OS means night rather than a bright pink page. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --font-display: Newsreader, Georgia, serif;
+    --font-figure: Newsreader, Georgia, serif;
+    --font: Karla, 'Helvetica Neue', system-ui, sans-serif;
+    --page: #16130f;
+    --page-image: none;
+    --surface-1: #1c1917;
+    --text-primary: #f4efe7;
+    --text-secondary: #cdc3b6;
+    --text-muted: #8f8478;
+    --gridline: #2a231d;
+    --baseline: #3d342b;
+    --border: #332c25;
+    --success: #0ca30c;
+    --accent: #f0a875;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --seq-0: #241f1a;
+    --seq-1: #184f95;
+    --seq-2: #256abf;
+    --seq-3: #3987e5;
+    --seq-4: #6da7ec;
+    --seq-5: #9ec5f4;
+    --radius: 10px;
+    --card-radius: 12px;
+    --card-border: 1px solid var(--border);
+    --card-shadow: none;
+    --bar-radius: 4px 4px 0 0;
+    --bar-fill: var(--series-1);
+    --cell-radius: 3px;
+    --control-radius: 8px;
+    --playful: 0;
+  }
 }

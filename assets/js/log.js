@@ -8,6 +8,7 @@
 
 import { loadLibrary, saveLibrary, hasSaveApi, serializeLibrary } from './store.js';
 import { makeBook, exportCSV, bookId, splitList, todayISO, STATUS } from './formats.js';
+import * as theme from './theme.js';
 
 /** Shown in the recent list; matches the labels the shelf uses. */
 const STATUS_LABELS = {
@@ -36,17 +37,8 @@ if (wanted) startEdit(wanted);
 // ---------------------------------------------------------------------------
 
 function initTheme() {
-  const saved = localStorage.getItem('book-tracker:theme');
-  if (saved) document.documentElement.setAttribute('data-theme', saved);
-  $('themeToggle').addEventListener('click', () => {
-    const root = document.documentElement;
-    const current =
-      root.getAttribute('data-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('book-tracker:theme', next);
-  });
+  theme.init();
+  theme.renderPicker($('themePicker'));
 }
 
 /** Rating select in the quarter-star steps StoryGraph supports. */

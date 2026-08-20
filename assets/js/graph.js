@@ -10,6 +10,7 @@ import {
 } from './store.js';
 import { columnChart, lineChart, barChart, heatmap, heatmapLegend, smallMultiples, MONTHS } from './charts.js';
 import { importCSV, exportCSV, mergeBooks, STATUS } from './formats.js';
+import * as theme from './theme.js';
 
 const STATUS_LABELS = {
   [STATUS.READ]: 'Read',
@@ -88,20 +89,10 @@ function refreshStats(published) {
 // ---------------------------------------------------------------------------
 
 function initTheme() {
-  const saved = localStorage.getItem('book-tracker:theme');
-  if (saved) document.documentElement.setAttribute('data-theme', saved);
-  $('themeToggle').addEventListener('click', () => {
-    const root = document.documentElement;
-    const current =
-      root.getAttribute('data-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = current === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('book-tracker:theme', next);
-    // Charts read colors from CSS custom properties at draw time, so a theme
-    // flip needs a redraw to pick up the new steps.
-    render();
-  });
+  theme.init();
+  // Charts read their colours from CSS custom properties when they draw, so a
+  // theme change needs a redraw to pick up the new palette.
+  theme.renderPicker($('themePicker'), () => render());
 }
 
 // ---------------------------------------------------------------------------

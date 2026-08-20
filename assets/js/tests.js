@@ -8,6 +8,8 @@
 
 import { parseCSV, toCSV, escapeField } from './csv.js';
 import { serializeLibrary, collectNotes, attachNotes, computeStats, auditStats } from './store.js';
+import { checkCategorical, checkRamp, contrast, deltaE, simulate } from './palette.js';
+import { THEMES } from './theme.js';
 import {
   cleanISBN, toISODate, toGoodreadsDate, parseRating, parseDatesRead,
   detectFormat, importCSV, exportCSV, mergeBooks, makeBook, matchKey,
@@ -617,6 +619,79 @@ test('authors are still published, as counts', () => {
       dateRead: '2026-01-05' }),
   ]);
   eq(stats.authors.all, [{ name: 'Phil Knight', count: 1 }]);
+});
+
+// ---------------------------------------------------------------------------
+// Every theme's palette is legible
+// ---------------------------------------------------------------------------
+
+// data-theme on a detached element does not match `:root[data-theme=...]`, so
+// read each theme by stamping the root, restoring it afterwards.
+function withTheme(id, fn) {
+  const root = document.documentElement;
+  const before = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', id);
+  try {
+    const cs = getComputedStyle(root);
+    const read = (n) => cs.getPropertyValue(n).trim();
+    return fn({
+      surface: read('--surface-1'),
+      page: read('--page'),
+      series: [read('--series-1'), read('--series-2'), read('--series-3')].filter(Boolean),
+      ramp: [1, 2, 3, 4, 5].map((i) => read(`--seq-${i}`)).filter(Boolean),
+    });
+  } finally {
+    if (before) root.setAttribute('data-theme', before);
+    else root.removeAttribute('data-theme');
+  }
+}
+
+for (const t of THEMES) {
+  test(`${t.label}: series colours are tellable apart`, () => {
+    withTheme(t.id, (tok) => {
+      ok(tok.series.length >= 2, `only found ${tok.series.length} series colours`);
+      const { ok: passed, problems } = checkCategorical(tok.series, tok.surface);
+      ok(passed, problems.filter((p) => p.startsWith('FAIL')).join(' · '));
+    });
+  });
+
+  test(`${t.label}: the heatmap ramp reads light to dark`, () => {
+    withTheme(t.id, (tok) => {
+      eq(tok.ramp.length, 5, 'expected five ramp steps');
+      const { ok: passed, problems } = checkRamp(tok.ramp, tok.surface);
+      ok(passed, problems.filter((p) => p.startsWith('FAIL')).join(' · '));
+    });
+  });
+
+  test(`${t.label}: body text is readable on the card`, () => {
+    withTheme(t.id, (tok) => {
+      const cs = getComputedStyle(document.documentElement);
+      const ink = cs.getPropertyValue('--text-primary').trim();
+      const ratio = contrast(ink, tok.surface);
+      ok(ratio >= 4.5, `text is ${ratio.toFixed(2)}:1 on the card — needs 4.5:1`);
+    });
+  });
+}
+
+test('the checks would actually fail a bad palette', () => {
+  // A guard that cannot fail is decoration. Two colours a red-green colour
+  // blind reader cannot separate must be rejected.
+  const bad = checkCategorical(['#2a78d6', '#2f7ad8'], '#ffffff');
+  ok(!bad.ok, 'two near-identical colours were accepted');
+  const badRamp = checkRamp(['#f472b6', '#f273b5', '#f172b4', '#f071b3', '#ef70b2'], '#fff0f6');
+  ok(!badRamp.ok, 'a flat ramp was accepted');
+});
+
+test('colour maths matches known values', () => {
+  // Black on white is the one contrast ratio everyone knows.
+  eq(Math.round(contrast('#000000', '#ffffff') * 100) / 100, 21);
+  eq(Math.round(contrast('#ffffff', '#ffffff') * 100) / 100, 1);
+  eq(deltaE('#ff0000', '#ff0000'), 0);
+  // Red and green collapse toward each other for a deuteranope; that
+  // collapse is the whole reason the check exists.
+  const plain = deltaE('#d40000', '#00a000');
+  const cvd = deltaE(simulate('#d40000', 'deutan'), simulate('#00a000', 'deutan'));
+  ok(cvd < plain, `simulation did not reduce the gap (${cvd.toFixed(1)} vs ${plain.toFixed(1)})`);
 });
 
 // ---------------------------------------------------------------------------
