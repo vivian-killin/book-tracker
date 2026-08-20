@@ -339,8 +339,8 @@ function render() {
  * shelf have nothing to act on.
  */
 function renderModeChrome() {
-  const libraryOnly = ['importBtn', 'exportGr', 'exportSg', 'exportJson'];
-  libraryOnly.forEach((id) => { $(id).hidden = state.aggregateOnly; });
+  const libraryOnly = ['importBtn', 'exportGr', 'exportSg', 'exportJson', 'dataActions'];
+  libraryOnly.forEach((id) => { const el = $(id); if (el) el.hidden = state.aggregateOnly; });
   $('privacyNote').hidden = !state.aggregateOnly;
 }
 

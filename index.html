@@ -28,12 +28,14 @@
   <!-- One filter row scoping every chart below it. -->
   <div class="filter-row" id="filterRow" hidden>
     <span class="tile-label" style="margin:0">Year</span>
-    <span id="yearButtons" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+    <span id="yearButtons" class="scroll-row"></span>
     <span class="spacer"></span>
-    <button class="btn btn-small" id="importBtn" type="button">Import CSV</button>
-    <button class="btn btn-small" id="exportGr" type="button">Export for Goodreads</button>
-    <button class="btn btn-small" id="exportSg" type="button">Export for StoryGraph</button>
-    <button class="btn btn-small" id="exportJson" type="button">Download books.json</button>
+    <span id="dataActions" class="scroll-row">
+      <button class="btn btn-small" id="importBtn" type="button">Import CSV</button>
+      <button class="btn btn-small" id="exportGr" type="button">Export for Goodreads</button>
+      <button class="btn btn-small" id="exportSg" type="button">Export for StoryGraph</button>
+      <button class="btn btn-small" id="exportJson" type="button">Download books.json</button>
+    </span>
     <input type="file" id="fileInput" accept=".csv,text/csv" hidden>
   </div>
 
@@ -166,7 +168,7 @@
       <div class="shelf-controls">
         <label class="sr-only" for="shelfSearch">Search books</label>
         <input type="search" id="shelfSearch" placeholder="Search title, author, tag&hellip;">
-        <span id="statusFilters" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+        <span id="statusFilters" class="scroll-row"></span>
       </div>
       <div class="table-wrap" id="shelfTable"></div>
     </section>

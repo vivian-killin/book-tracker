@@ -259,6 +259,20 @@ surface, and that the heatmap ramp is monotone with visible steps. The maths is
 self-contained, so this stays dependency-free. Two of the tests check the
 checks — a palette that should fail must actually fail.
 
+## On a phone
+
+Controls get 44px targets, form fields are 16px so iOS does not zoom in when
+you tap one, and long rows of buttons scroll sideways in a single line rather
+than wrapping into four rows of chrome above the reading.
+
+Chart text is sized in viewBox units, so it shrinks with the chart: an 11px
+label on a 720-wide chart renders at about 5px on a 375px screen — fine on the
+desktop it was measured on, unreadable on a phone. The scaled charts declare
+larger type on small screens so it lands back near 11px. The heatmap cannot
+shrink at all (squeezed, it ran the months together into "JanFebMar" and
+clipped "2018" to "018"), so it keeps its natural size and scrolls sideways
+inside its card.
+
 ## Notes on the charts
 
 Counts only ever get whole-numbered axes. The current year's pace line stops at
