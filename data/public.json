@@ -1,0 +1,898 @@
+{
+  "version": 1,
+  "generated": "2026-08-20",
+  "totals": {
+    "tracked": 975,
+    "read": 949,
+    "dated": 466,
+    "undated": 483,
+    "pages": 154014,
+    "pagesCounted": 460,
+    "authors": 317,
+    "rated": 314,
+    "avgRating": 3.7229299363057327,
+    "longestPages": 757
+  },
+  "years": [
+    2026,
+    2025,
+    2024,
+    2023,
+    2022,
+    2021,
+    2018
+  ],
+  "perYear": {
+    "2026": {
+      "books": 104,
+      "pages": 31582,
+      "authors": 95,
+      "rated": 104,
+      "avgRating": 3.6923076923076925,
+      "medianDays": null,
+      "pagesCounted": 103,
+      "longestPages": 560
+    },
+    "2025": {
+      "books": 202,
+      "pages": 68981,
+      "authors": 170,
+      "rated": 202,
+      "avgRating": 3.722772277227723,
+      "medianDays": null,
+      "pagesCounted": 198,
+      "longestPages": 757
+    },
+    "2024": {
+      "books": 151,
+      "pages": 50560,
+      "authors": 115,
+      "rated": 7,
+      "avgRating": 4.0,
+      "medianDays": null,
+      "pagesCounted": 150,
+      "longestPages": 623
+    },
+    "2023": {
+      "books": 5,
+      "pages": 1548,
+      "authors": 5,
+      "rated": 0,
+      "avgRating": null,
+      "medianDays": null,
+      "pagesCounted": 5,
+      "longestPages": 400
+    },
+    "2022": {
+      "books": 1,
+      "pages": 332,
+      "authors": 1,
+      "rated": 1,
+      "avgRating": 5.0,
+      "medianDays": null,
+      "pagesCounted": 1,
+      "longestPages": 332
+    },
+    "2021": {
+      "books": 2,
+      "pages": 659,
+      "authors": 2,
+      "rated": 0,
+      "avgRating": null,
+      "medianDays": null,
+      "pagesCounted": 2,
+      "longestPages": 371
+    },
+    "2018": {
+      "books": 1,
+      "pages": 352,
+      "authors": 1,
+      "rated": 0,
+      "avgRating": null,
+      "medianDays": null,
+      "pagesCounted": 1,
+      "longestPages": 352
+    }
+  },
+  "monthly": {
+    "2026": [
+      26,
+      12,
+      13,
+      15,
+      16,
+      5,
+      12,
+      5,
+      0,
+      0,
+      0,
+      0
+    ],
+    "2025": [
+      12,
+      11,
+      18,
+      19,
+      21,
+      16,
+      19,
+      18,
+      13,
+      11,
+      20,
+      24
+    ],
+    "2024": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      8,
+      10,
+      11,
+      72,
+      14,
+      13,
+      22
+    ],
+    "2023": [
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "2022": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    "2021": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "2018": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0
+    ]
+  },
+  "ratings": {
+    "all": [
+      1,
+      13,
+      110,
+      138,
+      52
+    ],
+    "2026": [
+      0,
+      4,
+      38,
+      48,
+      14
+    ],
+    "2025": [
+      1,
+      8,
+      71,
+      88,
+      34
+    ],
+    "2024": [
+      0,
+      1,
+      1,
+      2,
+      3
+    ],
+    "2023": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "2022": [
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "2021": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "2018": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "authors": {
+    "all": [
+      {
+        "name": "Ali Hazelwood",
+        "count": 8
+      },
+      {
+        "name": "Abby Jimenez",
+        "count": 7
+      },
+      {
+        "name": "Lauren Layne",
+        "count": 7
+      },
+      {
+        "name": "Christina Lauren",
+        "count": 6
+      },
+      {
+        "name": "Amy  Lea",
+        "count": 5
+      },
+      {
+        "name": "Falon Ballard",
+        "count": 5
+      },
+      {
+        "name": "Katherine Center",
+        "count": 5
+      },
+      {
+        "name": "Lana Ferguson",
+        "count": 5
+      }
+    ],
+    "2026": [
+      {
+        "name": "Katherine Center",
+        "count": 3
+      },
+      {
+        "name": "B.K. Borison",
+        "count": 2
+      },
+      {
+        "name": "Christina Lauren",
+        "count": 2
+      },
+      {
+        "name": "Falon Ballard",
+        "count": 2
+      },
+      {
+        "name": "Kate Clayborn",
+        "count": 2
+      },
+      {
+        "name": "Rachel  Reid",
+        "count": 2
+      },
+      {
+        "name": "Suzanne Collins",
+        "count": 2
+      },
+      {
+        "name": "Tessa Bailey",
+        "count": 2
+      }
+    ],
+    "2025": [
+      {
+        "name": "Ali Hazelwood",
+        "count": 5
+      },
+      {
+        "name": "Lyla Sage",
+        "count": 5
+      },
+      {
+        "name": "Sarah J. Maas",
+        "count": 4
+      },
+      {
+        "name": "Heather Fawcett",
+        "count": 3
+      },
+      {
+        "name": "Lana Ferguson",
+        "count": 3
+      },
+      {
+        "name": "Abby Jimenez",
+        "count": 2
+      },
+      {
+        "name": "Alexa  Martin",
+        "count": 2
+      },
+      {
+        "name": "Amy  Lea",
+        "count": 2
+      }
+    ],
+    "2024": [
+      {
+        "name": "Lauren Layne",
+        "count": 6
+      },
+      {
+        "name": "Abby Jimenez",
+        "count": 4
+      },
+      {
+        "name": "Christina Lauren",
+        "count": 4
+      },
+      {
+        "name": "Rebecca Yarros",
+        "count": 4
+      },
+      {
+        "name": "Ali Hazelwood",
+        "count": 3
+      },
+      {
+        "name": "Amy  Lea",
+        "count": 3
+      },
+      {
+        "name": "Jessica  Joyce",
+        "count": 3
+      },
+      {
+        "name": "Sarah       Adams",
+        "count": 3
+      }
+    ],
+    "2023": [
+      {
+        "name": "Belinda Huijuan Tang",
+        "count": 1
+      },
+      {
+        "name": "Celeste Ng",
+        "count": 1
+      },
+      {
+        "name": "Kathy Sierra",
+        "count": 1
+      },
+      {
+        "name": "Linda Jaivin",
+        "count": 1
+      },
+      {
+        "name": "Michelle Zauner",
+        "count": 1
+      }
+    ],
+    "2022": [
+      {
+        "name": "Colleen Hoover",
+        "count": 1
+      }
+    ],
+    "2021": [
+      {
+        "name": "Abi Daré",
+        "count": 1
+      },
+      {
+        "name": "Brit Bennett",
+        "count": 1
+      }
+    ],
+    "2018": [
+      {
+        "name": "Jenny Han",
+        "count": 1
+      }
+    ]
+  },
+  "genres": {
+    "all": [
+      {
+        "name": "Romantic comedy",
+        "count": 167
+      },
+      {
+        "name": "Romance",
+        "count": 68
+      },
+      {
+        "name": "Fiction",
+        "count": 31
+      },
+      {
+        "name": "Business",
+        "count": 28
+      },
+      {
+        "name": "Science",
+        "count": 28
+      },
+      {
+        "name": "Memoir",
+        "count": 26
+      },
+      {
+        "name": "Self-help",
+        "count": 20
+      },
+      {
+        "name": "Historical fiction",
+        "count": 16
+      }
+    ],
+    "2026": [
+      {
+        "name": "Romantic comedy",
+        "count": 24
+      },
+      {
+        "name": "Fiction",
+        "count": 15
+      },
+      {
+        "name": "Romance",
+        "count": 11
+      },
+      {
+        "name": "Science",
+        "count": 9
+      },
+      {
+        "name": "Memoir",
+        "count": 8
+      },
+      {
+        "name": "Business",
+        "count": 4
+      },
+      {
+        "name": "Psychology",
+        "count": 4
+      },
+      {
+        "name": "Self-help",
+        "count": 4
+      }
+    ],
+    "2025": [
+      {
+        "name": "Romantic comedy",
+        "count": 68
+      },
+      {
+        "name": "Romance",
+        "count": 33
+      },
+      {
+        "name": "Business",
+        "count": 19
+      },
+      {
+        "name": "Science",
+        "count": 13
+      },
+      {
+        "name": "Historical fiction",
+        "count": 12
+      },
+      {
+        "name": "Memoir",
+        "count": 12
+      },
+      {
+        "name": "Self-help",
+        "count": 12
+      },
+      {
+        "name": "Fiction",
+        "count": 11
+      }
+    ],
+    "2024": [
+      {
+        "name": "Romantic comedy",
+        "count": 75
+      },
+      {
+        "name": "Romance",
+        "count": 24
+      },
+      {
+        "name": "Memoir",
+        "count": 6
+      },
+      {
+        "name": "Science",
+        "count": 6
+      },
+      {
+        "name": "Business",
+        "count": 5
+      },
+      {
+        "name": "Fiction",
+        "count": 5
+      },
+      {
+        "name": "Thriller",
+        "count": 5
+      },
+      {
+        "name": "Historical fiction",
+        "count": 4
+      }
+    ],
+    "2023": [],
+    "2022": [],
+    "2021": [],
+    "2018": []
+  },
+  "heat": {
+    "years": [
+      2018,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "grid": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        8,
+        10,
+        11,
+        72,
+        14,
+        13,
+        22
+      ],
+      [
+        12,
+        11,
+        18,
+        19,
+        21,
+        16,
+        19,
+        18,
+        13,
+        11,
+        20,
+        24
+      ],
+      [
+        26,
+        12,
+        13,
+        15,
+        16,
+        5,
+        12,
+        5,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "max": 72
+  },
+  "genreTrend": {
+    "years": [
+      2018,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "series": [
+      {
+        "name": "Romantic comedy",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          75,
+          68,
+          24
+        ]
+      },
+      {
+        "name": "Romance",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          24,
+          33,
+          11
+        ]
+      },
+      {
+        "name": "Fiction",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          5,
+          11,
+          15
+        ]
+      },
+      {
+        "name": "Business",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          5,
+          19,
+          4
+        ]
+      },
+      {
+        "name": "Science",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          6,
+          13,
+          9
+        ]
+      },
+      {
+        "name": "Memoir",
+        "values": [
+          0,
+          0,
+          0,
+          0,
+          6,
+          12,
+          8
+        ]
+      }
+    ]
+  },
+  "genreCoverage": {
+    "tagged": 356,
+    "total": 466,
+    "noIsbn": 129
+  },
+  "lengths": [
+    {
+      "name": "Under 200",
+      "count": 34
+    },
+    {
+      "name": "200–299",
+      "count": 80
+    },
+    {
+      "name": "300–399",
+      "count": 258
+    },
+    {
+      "name": "400–499",
+      "count": 72
+    },
+    {
+      "name": "500+",
+      "count": 16
+    }
+  ],
+  "ages": [
+    {
+      "name": "Same year",
+      "count": 261
+    },
+    {
+      "name": "1 year",
+      "count": 84
+    },
+    {
+      "name": "2–3 years",
+      "count": 41
+    },
+    {
+      "name": "4–9 years",
+      "count": 55
+    },
+    {
+      "name": "10+ years",
+      "count": 25
+    }
+  ],
+  "ratingByGenre": [
+    {
+      "name": "Memoir",
+      "count": 21,
+      "avg": 4.43
+    },
+    {
+      "name": "Science",
+      "count": 22,
+      "avg": 4.27
+    },
+    {
+      "name": "Psychology",
+      "count": 12,
+      "avg": 4.25
+    },
+    {
+      "name": "History",
+      "count": 10,
+      "avg": 4.2
+    },
+    {
+      "name": "Self-help",
+      "count": 16,
+      "avg": 4.19
+    },
+    {
+      "name": "Business",
+      "count": 23,
+      "avg": 4.09
+    },
+    {
+      "name": "Historical fiction",
+      "count": 12,
+      "avg": 3.92
+    },
+    {
+      "name": "Fiction",
+      "count": 27,
+      "avg": 3.89
+    },
+    {
+      "name": "Thriller",
+      "count": 9,
+      "avg": 3.78
+    },
+    {
+      "name": "Essays",
+      "count": 4,
+      "avg": 3.75
+    },
+    {
+      "name": "Romance",
+      "count": 45,
+      "avg": 3.56
+    },
+    {
+      "name": "Mystery",
+      "count": 4,
+      "avg": 3.5
+    },
+    {
+      "name": "Romantic comedy",
+      "count": 94,
+      "avg": 3.45
+    },
+    {
+      "name": "Fantasy",
+      "count": 11,
+      "avg": 3.45
+    }
+  ],
+  "rereads": 4
+}

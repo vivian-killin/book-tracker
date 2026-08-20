@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tests</title>
+<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/app.css">
+<style>
+  ul#results { list-style: none; padding: 0; margin: 20px 0 0; }
+  ul#results li {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+  }
+  ul#results .mark { display: inline-block; width: 18px; font-weight: 700; }
+  ul#results li.ok .mark { color: var(--success); }
+  ul#results li.bad .mark { color: var(--series-2); }
+  ul#results li.bad { color: var(--text-primary); }
+  .why {
+    margin: 6px 0 2px 18px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+    color: var(--series-2);
+    white-space: pre-wrap;
+  }
+  .hero-value.pass { color: var(--success); }
+  .hero-value.fail { color: var(--series-2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site-header">
+    <h1 class="site-title">Tests</h1>
+    <div class="header-actions">
+      <a class="btn btn-small" href="index.html">Reading graph</a>
+      <a class="btn btn-small" href="log.html">Log a book</a>
+    </div>
+  </header>
+  <p class="site-sub">
+    CSV parsing, both format adapters, and the merge rules. Reload to re-run.
+  </p>
+
+  <div class="hero-value" id="summary">Running&hellip;</div>
+  <ul id="results"></ul>
+</div>
+<script type="module" src="assets/js/tests.js"></script>
+</body>
+</html>

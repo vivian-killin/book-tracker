@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log a book</title>
+<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <h1 class="site-title">Log a book</h1>
+    <div class="header-actions">
+      <a class="btn btn-small" href="index.html">Reading graph</a>
+      <button class="btn btn-small" id="themeToggle" type="button">Theme</button>
+    </div>
+  </header>
+  <p class="site-sub" id="saveTarget">Checking where this will save&hellip;</p>
+
+  <div id="banners"></div>
+
+  <form id="bookForm" class="card" autocomplete="off">
+    <h2 class="card-title" id="formTitle">New book</h2>
+    <p class="card-sub">
+      Everything except title is optional. Fields marked
+      <span class="pill">SG</span> only survive the StoryGraph export;
+      <span class="pill">private</span> never leaves your library.
+    </p>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="title">Title <span aria-hidden="true">*</span></label>
+        <input id="title" name="title" required>
+      </div>
+      <div class="field">
+        <label for="author">Author</label>
+        <input id="author" name="author">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="read">Read</option>
+          <option value="reading">Currently reading</option>
+          <option value="to-read">To read</option>
+          <option value="dnf">Did not finish</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="rating">Rating</label>
+        <select id="rating" name="rating"></select>
+        <div class="field-hint">Quarter stars round to whole for Goodreads.</div>
+      </div>
+      <div class="field">
+        <label for="pages">Pages</label>
+        <input id="pages" name="pages" type="number" min="0" step="1">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="dateStarted">Started</label>
+        <input id="dateStarted" name="dateStarted" type="date">
+      </div>
+      <div class="field">
+        <label for="dateRead">Finished</label>
+        <input id="dateRead" name="dateRead" type="date">
+      </div>
+      <div class="field">
+        <label for="isbn13">ISBN-13</label>
+        <input id="isbn13" name="isbn13" inputmode="numeric">
+        <div class="field-hint">Improves matching on import.</div>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="format">Format</label>
+        <input id="format" name="format" placeholder="Hardcover, Audiobook&hellip;">
+      </div>
+      <div class="field">
+        <label for="tags">Tags</label>
+        <input id="tags" name="tags" placeholder="sci-fi, book club">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="moods">Moods <span class="pill">SG</span></label>
+        <input id="moods" name="moods" placeholder="reflective, tense">
+      </div>
+      <div class="field">
+        <label for="pace">Pace <span class="pill">SG</span></label>
+        <select id="pace" name="pace">
+          <option value="">—</option>
+          <option value="Slow">Slow</option>
+          <option value="Medium">Medium</option>
+          <option value="Fast">Fast</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="review">Review</label>
+      <textarea id="review" name="review" placeholder="Goes public on Goodreads and StoryGraph."></textarea>
+    </div>
+
+    <div class="field">
+      <label for="privateNotes">Private notes <span class="pill">private</span></label>
+      <textarea id="privateNotes" name="privateNotes" placeholder="The thing you used to put in the iPhone note."></textarea>
+      <div class="field-hint">
+        Stays in <code>data/notes.json</code>, which is gitignored — so it is never
+        committed and never appears on your published page. It does travel in the
+        Goodreads CSV (that column is private to your account), and never in the
+        StoryGraph one.
+      </div>
+    </div>
+
+    <div class="field checkbox-row">
+      <input id="owned" name="owned" type="checkbox">
+      <label for="owned" style="margin:0">I own a copy</label>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px">
+      <button class="btn is-active" type="submit" id="submitBtn">Save book</button>
+      <button class="btn" type="button" id="resetBtn">Clear</button>
+      <span class="spacer"></span>
+      <button class="btn" type="button" id="deleteBtn" hidden>Delete</button>
+    </div>
+  </form>
+
+  <section class="card">
+    <div class="card-head">
+      <h2 class="card-title">Push to Goodreads and StoryGraph</h2>
+    </div>
+    <p class="card-sub">
+      Download one file, upload it twice. Neither service has a write API, so
+      this is the only route that does not need your password.
+    </p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" type="button" id="exportGr">1 · Download Goodreads CSV</button>
+      <a class="btn" href="https://www.goodreads.com/review/import" target="_blank" rel="noopener noreferrer">2 · Open Goodreads import ↗</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" type="button" id="exportSg">1 · Download StoryGraph CSV</button>
+      <a class="btn" href="https://app.thestorygraph.com/import" target="_blank" rel="noopener noreferrer">2 · Open StoryGraph import ↗</a>
+    </div>
+    <p class="field-hint" style="margin-top:14px">
+      Both importers match on title, author and ISBN, and update existing entries
+      rather than duplicating them. The StoryGraph file keeps quarter-star
+      ratings, moods, pace and did-not-finish; the Goodreads one keeps page
+      counts and private notes. Details in <a href="docs/SYNC.md">docs/SYNC.md</a>.
+    </p>
+  </section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2 class="card-title">Recently logged</h2>
+    </div>
+    <p class="card-sub">Select a row to edit it.</p>
+    <div class="table-wrap" id="recent"></div>
+  </section>
+
+</div>
+
+<script type="module" src="assets/js/log.js"></script>
+</body>
+</html>

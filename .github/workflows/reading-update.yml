@@ -1,0 +1,103 @@
+# Emails you when the reading stats change, without storing any credentials.
+#
+# GitHub deliberately does not notify you about your own pushes, and the daily
+# job commits as you — so a push alone is silent. But a workflow runs as
+# github-actions[bot], and GitHub does notify you about activity it did not
+# attribute to you. So the bot leaves a comment on one long-lived issue and
+# mentions you, which GitHub delivers by email through your normal
+# notification settings.
+#
+# The only token involved is GITHUB_TOKEN, which Actions injects for the life
+# of the run. There is nothing to create, paste, rotate or leak.
+
+name: Reading stats updated
+
+on:
+  push:
+    branches: [main]
+    paths: ['data/public.json']
+  workflow_dispatch:        # lets you trigger a test run from the Actions tab
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2    # need the previous commit to report what changed
+
+      - name: Summarise what changed
+        id: summary
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, subprocess
+
+          def load(ref=None):
+              if ref is None:
+                  return json.load(open('data/public.json'))
+              out = subprocess.run(['git', 'show', f'{ref}:data/public.json'],
+                                   capture_output=True, text=True)
+              return json.loads(out.stdout) if out.returncode == 0 else None
+
+          now = load()
+          before = load('HEAD~1')
+
+          t = now['totals']
+          cov = now['genreCoverage']
+          lines = []
+
+          if before:
+              d_read = t['read'] - before['totals']['read']
+              d_tag = cov['tagged'] - before['genreCoverage']['tagged']
+              if d_read:
+                  lines.append(f"**{d_read:+d}** book{'s' if abs(d_read) != 1 else ''} read")
+              if d_tag:
+                  lines.append(f"**{d_tag:+d}** newly genre-tagged")
+          if not lines:
+              lines.append("Stats refreshed")
+
+          top = now['genres']['all'][:3]
+          body = (
+              " · ".join(lines) + "\n\n"
+              f"- {t['read']} books read, {t['dated']} with a finish date\n"
+              f"- {cov['tagged']} of {cov['total']} genre-tagged "
+              f"({round(100 * cov['tagged'] / cov['total']) if cov['total'] else 0}%)\n"
+              f"- Top genres: {', '.join(g['name'] + ' ' + str(g['count']) for g in top)}\n\n"
+              "https://vivian-killin.github.io/book-tracker/"
+          )
+          # Multi-line values must be passed to GITHUB_OUTPUT with a delimiter.
+          print("body<<BODY_EOF")
+          print(body)
+          print("BODY_EOF")
+          PY
+
+      - name: Comment on the reading log issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: ${{ steps.summary.outputs.body }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          TITLE="Reading log"
+
+          # One long-lived issue rather than a new one each time, so this stays
+          # a single email thread instead of a pile of notifications.
+          NUM=$(gh issue list --state open --search "$TITLE in:title" \
+                  --json number,title \
+                  --jq "map(select(.title == \"$TITLE\")) | .[0].number // empty")
+
+          if [ -z "$NUM" ]; then
+            NUM=$(gh issue create --title "$TITLE" \
+                    --body "Automatic updates from the daily job. Close this and it will be recreated." \
+                    --assignee "$OWNER" \
+                    | grep -oE '[0-9]+$')
+            echo "created issue #$NUM"
+          fi
+
+          printf '%s\n\n_@%s — posted by the daily job._\n' "$BODY" "$OWNER" \
+            | gh issue comment "$NUM" --body-file -
+          echo "commented on issue #$NUM"

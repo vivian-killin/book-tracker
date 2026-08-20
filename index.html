@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading graph</title>
+<meta name="description" content="A self-hosted reading tracker that imports and exports Goodreads and StoryGraph CSVs.">
+<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <h1 class="site-title" id="siteTitle">Reading graph</h1>
+    <div class="header-actions">
+      <a class="btn btn-small" href="log.html">Log a book</a>
+      <button class="btn btn-small" id="themeToggle" type="button" aria-label="Toggle dark mode">Theme</button>
+    </div>
+  </header>
+  <p class="site-sub" id="siteSub">Loading&hellip;</p>
+
+  <div id="banners"></div>
+
+  <!-- One filter row scoping every chart below it. -->
+  <div class="filter-row" id="filterRow" hidden>
+    <span class="tile-label" style="margin:0">Year</span>
+    <span id="yearButtons" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+    <span class="spacer"></span>
+    <button class="btn btn-small" id="importBtn" type="button">Import CSV</button>
+    <button class="btn btn-small" id="exportGr" type="button">Export for Goodreads</button>
+    <button class="btn btn-small" id="exportSg" type="button">Export for StoryGraph</button>
+    <button class="btn btn-small" id="exportJson" type="button">Download books.json</button>
+    <input type="file" id="fileInput" accept=".csv,text/csv" hidden>
+  </div>
+
+  <p class="site-sub" id="privacyNote" hidden>
+    This is a published summary. It holds counts only &mdash; the individual
+    books are not part of this page or the data behind it.
+  </p>
+
+  <main id="dashboard" hidden>
+
+    <section class="hero" aria-labelledby="heroLabel">
+      <div class="hero-value" id="heroValue">0</div>
+      <div class="hero-label" id="heroLabel">books finished</div>
+      <div class="hero-delta" id="heroDelta"></div>
+    </section>
+
+    <section class="tiles" id="tiles" aria-label="Reading summary"></section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2 class="card-title" id="monthTitle">Books finished per month</h2>
+        <button class="btn btn-small" type="button" data-toggle="month">Table</button>
+      </div>
+      <p class="card-sub" id="monthSub"></p>
+      <div id="monthChart"></div>
+      <div id="monthTable" hidden></div>
+    </section>
+
+    <section class="card" id="paceCard">
+      <div class="card-head">
+        <h2 class="card-title">Pace through the year</h2>
+        <button class="btn btn-small" type="button" data-toggle="pace">Table</button>
+      </div>
+      <p class="card-sub" id="paceSub">Running total of books finished, this year against last.</p>
+      <div id="paceChart"></div>
+      <div class="legend" id="paceLegend"></div>
+      <div id="paceTable" hidden></div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2 class="card-title">Ratings</h2>
+        <button class="btn btn-small" type="button" data-toggle="rating">Table</button>
+      </div>
+      <p class="card-sub" id="ratingSub"></p>
+      <div id="ratingChart"></div>
+      <div id="ratingTable" hidden></div>
+    </section>
+
+    <section class="card" id="heatCard">
+      <div class="card-head">
+        <h2 class="card-title">Every month you have read</h2>
+        <button class="btn btn-small" type="button" data-toggle="heat">Table</button>
+      </div>
+      <p class="card-sub">Darker means more books finished that month.</p>
+      <div class="chart-scroll"><div id="heatChart"></div></div>
+      <div id="heatLegend"></div>
+      <div id="heatTable" hidden></div>
+    </section>
+
+    <section class="card" id="genreCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">Genres</h2>
+        <button class="btn btn-small" type="button" data-toggle="genre">Table</button>
+      </div>
+      <p class="card-sub" id="genreSub"></p>
+      <div id="genreChart"></div>
+      <div id="genreTable" hidden></div>
+    </section>
+
+    <section class="card" id="trendCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">Each genre, year by year</h2>
+        <button class="btn btn-small" type="button" data-toggle="trend">Table</button>
+      </div>
+      <p class="card-sub" id="trendSub"></p>
+      <div id="trendChart"></div>
+      <div id="trendTable" hidden></div>
+    </section>
+
+    <h2 class="section-head">What the books are like</h2>
+
+    <section class="tiles" id="shapeTiles" aria-label="Book characteristics"></section>
+
+    <section class="card" id="lengthCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">Book length</h2>
+        <button class="btn btn-small" type="button" data-toggle="length">Table</button>
+      </div>
+      <p class="card-sub" id="lengthSub"></p>
+      <div id="lengthChart"></div>
+      <div id="lengthTable" hidden></div>
+    </section>
+
+    <section class="card" id="ageCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">How old a book was when you read it</h2>
+        <button class="btn btn-small" type="button" data-toggle="age">Table</button>
+      </div>
+      <p class="card-sub" id="ageSub"></p>
+      <div id="ageChart"></div>
+      <div id="ageTable" hidden></div>
+    </section>
+
+    <section class="card" id="genreRatingCard" hidden>
+      <div class="card-head">
+        <h2 class="card-title">Which genres you rate highest</h2>
+        <button class="btn btn-small" type="button" data-toggle="genreRating">Table</button>
+      </div>
+      <p class="card-sub" id="genreRatingSub"></p>
+      <div id="genreRatingChart"></div>
+      <div id="genreRatingTable" hidden></div>
+    </section>
+
+    <section class="card" id="authorCard">
+      <div class="card-head">
+        <h2 class="card-title">Most-read authors</h2>
+        <button class="btn btn-small" type="button" data-toggle="author">Table</button>
+      </div>
+      <p class="card-sub" id="authorSub"></p>
+      <div id="authorChart"></div>
+      <div id="authorTable" hidden></div>
+    </section>
+
+    <section class="card" id="shelfCard">
+      <div class="card-head">
+        <h2 class="card-title">The shelf</h2>
+      </div>
+      <p class="card-sub" id="shelfSub"></p>
+      <div class="shelf-controls">
+        <label class="sr-only" for="shelfSearch">Search books</label>
+        <input type="search" id="shelfSearch" placeholder="Search title, author, tag&hellip;">
+        <span id="statusFilters" style="display:flex;gap:6px;flex-wrap:wrap"></span>
+      </div>
+      <div class="table-wrap" id="shelfTable"></div>
+    </section>
+
+  </main>
+
+  <section id="emptyState" class="empty" hidden>
+    <h2>No books yet</h2>
+    <p>
+      Import a Goodreads or StoryGraph CSV export to see your reading graph,
+      or <a href="log.html">log a book by hand</a>.
+    </p>
+    <p class="notes" style="max-width:44ch;margin:14px auto 20px">
+      Nothing is uploaded anywhere. The file is parsed in your browser and,
+      unless you are running this locally, stays in this browser only.
+    </p>
+    <div class="dropzone" id="dropzone">
+      <button class="btn" id="emptyImportBtn" type="button">Choose a CSV</button>
+      <div style="margin-top:10px">or drop the file here</div>
+    </div>
+    <p style="margin-top:20px">
+      <button class="btn btn-small" id="sampleBtn" type="button">Load sample data instead</button>
+    </p>
+  </section>
+
+</div>
+
+<script type="module" src="assets/js/graph.js"></script>
+</body>
+</html>

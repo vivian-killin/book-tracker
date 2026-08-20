@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Runs the genre backfill once a day.
+
+  IMPORTANT: this only works if the project lives OUTSIDE a macOS
+  privacy-protected folder. ~/Documents, ~/Desktop and ~/Downloads are all
+  protected, and a LaunchAgent running there fails with
+
+      /bin/bash: .../daily_genres.sh: Operation not permitted
+
+  even though the same command works when you run it yourself, because your
+  shell inherits Terminal's permissions and a background agent inherits none.
+  Keep the project somewhere like ~/book-tracker, or grant Full Disk Access to
+  /bin/bash (broad, and not recommended).
+
+  Install:   cp tools/com.book-tracker.genres.plist ~/Library/LaunchAgents/
+             launchctl load ~/Library/LaunchAgents/com.book-tracker.genres.plist
+  Run now:   launchctl start com.book-tracker.genres
+  Check:     launchctl list com.book-tracker.genres     # LastExitStatus 0 is good
+  Stop:      launchctl unload ~/Library/LaunchAgents/com.book-tracker.genres.plist
+
+  Paths must be absolute; launchd does not expand ~ or run a login shell.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.book-tracker.genres</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/vivian/book-tracker/tools/daily_genres.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key><integer>9</integer>
+    <key>Minute</key><integer>30</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/vivian/book-tracker/data/launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/vivian/book-tracker/data/launchd.log</string>
+</dict>
+</plist>

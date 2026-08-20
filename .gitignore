@@ -1,0 +1,37 @@
+# Your library, deliberately outside version control.
+#
+# books.json holds every title you have read. Committing it publishes that list
+# to anyone who can see the repo. Only the aggregates in data/public.json are
+# committed, and they are regenerated automatically on every save.
+data/books.json
+data/books.backup.json
+
+# Private notes live here, deliberately outside version control.
+#
+# public.json is committed and — on GitHub Pages — served publicly, so anything
+# in it is published. Notes are private even from the local library file, so
+# they are split into this companion file, which is never committed and never
+# deployed. Losing it means losing the notes: back them up via the
+# Goodreads CSV export, which does carry them.
+data/notes.json
+data/notes.backup.json
+
+# Your Google Books API key and the lookup cache. The key is a credential and
+# the cache is derived data, so neither belongs in the repo.
+data/.google-books-key
+data/genre-cache.json
+
+# Written by tools/serve.py before each save.
+data/public.backup.json
+data/*.json.tmp
+
+# Scratch CSVs. Exports from Goodreads/StoryGraph contain your full library and
+# any private notes, so they stay out of the repo by default.
+*.csv
+!docs/examples/*.csv
+
+.DS_Store
+__pycache__/
+*.pyc
+data/genre-run.log
+data/launchd.log
