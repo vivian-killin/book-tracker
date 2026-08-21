@@ -45,7 +45,7 @@ const $ = (id) => document.getElementById(id);
 // Boot
 // ---------------------------------------------------------------------------
 
-initTheme();
+theme.init();
 bindChrome();
 
 const loaded = await loadLibrary();
@@ -87,13 +87,6 @@ function refreshStats(published) {
 // ---------------------------------------------------------------------------
 // Theme
 // ---------------------------------------------------------------------------
-
-function initTheme() {
-  theme.init();
-  // Charts read their colours from CSS custom properties when they draw, so a
-  // theme change needs a redraw to pick up the new palette.
-  theme.renderPicker($('themePicker'), () => render());
-}
 
 // ---------------------------------------------------------------------------
 // Chrome: import, export, table toggles, shelf controls

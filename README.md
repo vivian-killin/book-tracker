@@ -218,7 +218,7 @@ assets/js/csv.js    RFC 4180 parser and writer
 assets/js/formats.js  Goodreads and StoryGraph adapters, both directions
 assets/js/store.js  persistence and the derived statistics
 assets/js/charts.js SVG renderers
-assets/js/theme.js  theme switching, and the Barbie cursor trail
+assets/js/theme.js  the cursor butterflies and glitter
 assets/js/palette.js  colour-blindness and contrast checks
 tools/serve.py      local server with the save endpoint
 tools/enrich_genres.py  fetch genres from Google Books
@@ -230,7 +230,7 @@ docs/DATA-MODEL.md  the book record, field by field
 
 ## Tests
 
-Open `tests.html` with the server running. 79 tests covering CSV edge cases
+Open `tests.html` with the server running. 73 tests covering CSV edge cases
 (quoted commas, embedded newlines, doubled quotes, BOMs, CRLF), both format
 adapters in both directions, the merge rules, and the guarantees that private
 notes never reach `books.json` and that no book is named in `public.json`.
@@ -239,22 +239,23 @@ They run in the page rather than under a test runner so that the project keeps
 its promise of no build step and no dependencies — a browser is the only
 requirement.
 
-## Themes
+## The look
 
-Everything visual lives in `assets/theme.css` as tokens — colours, type, radii,
-the shape of a bar. Three themes ship: **Barbie** (default), **Warm** and
-**Night**, switched from the picker in the header and remembered per browser.
-Nothing in the charts or the controllers knows which theme is on, so a new look
-is an edit to one file.
+One design, called Blossom, and all of it lives in `assets/theme.css` as
+tokens — colours, type, radii, the shape of a bar. There is no theme picker, no
+`data-theme` attribute and no light/dark fork: the site looks the same to
+everyone, which is the point. Change how it looks by changing that one file;
+nothing in the charts or the controllers needs to know.
 
-Barbie adds butterflies and glitter that follow the cursor. They stop entirely
-under `prefers-reduced-motion` — a particle trail chasing the pointer is
-exactly what that setting exists to prevent.
+Butterflies and glitter follow the pointer. They are off entirely under
+`prefers-reduced-motion` — a particle trail chasing the cursor is exactly what
+that setting exists to prevent — and they never appear on a touch screen,
+which has no cursor to follow.
 
-**A theme that fails its colour checks fails the test run.** `tests.html` reads
-each theme's real tokens out of the stylesheet and puts them through
+**A palette that fails its colour checks fails the test run.** `tests.html`
+reads the real tokens out of the stylesheet and puts them through
 `assets/js/palette.js`: colour-blind separation between series colours
-(simulating protanopia and deuteranopia), contrast against that theme's own
+(simulating protanopia and deuteranopia), contrast against the page's own
 surface, and that the heatmap ramp is monotone with visible steps. The maths is
 self-contained, so this stays dependency-free. Two of the tests check the
 checks — a palette that should fail must actually fail.

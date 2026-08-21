@@ -21,7 +21,7 @@ const STATUS_LABELS = {
 const state = { books: [], editingId: null };
 const $ = (id) => document.getElementById(id);
 
-initTheme();
+theme.init();
 buildRatingOptions();
 bindForm();
 await describeSaveTarget();
@@ -35,11 +35,6 @@ const wanted = new URLSearchParams(location.search).get('id');
 if (wanted) startEdit(wanted);
 
 // ---------------------------------------------------------------------------
-
-function initTheme() {
-  theme.init();
-  theme.renderPicker($('themePicker'));
-}
 
 /** Rating select in the quarter-star steps StoryGraph supports. */
 function buildRatingOptions() {

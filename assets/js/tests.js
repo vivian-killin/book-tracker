@@ -9,7 +9,6 @@
 import { parseCSV, toCSV, escapeField } from './csv.js';
 import { serializeLibrary, collectNotes, attachNotes, computeStats, auditStats } from './store.js';
 import { checkCategorical, checkRamp, contrast, deltaE, simulate } from './palette.js';
-import { THEMES } from './theme.js';
 import {
   cleanISBN, toISODate, toGoodreadsDate, parseRating, parseDatesRead,
   detectFormat, importCSV, exportCSV, mergeBooks, makeBook, matchKey,
@@ -622,56 +621,43 @@ test('authors are still published, as counts', () => {
 });
 
 // ---------------------------------------------------------------------------
-// Every theme's palette is legible
+// The palette is legible
 // ---------------------------------------------------------------------------
 
-// data-theme on a detached element does not match `:root[data-theme=...]`, so
-// read each theme by stamping the root, restoring it afterwards.
-function withTheme(id, fn) {
-  const root = document.documentElement;
-  const before = root.getAttribute('data-theme');
-  root.setAttribute('data-theme', id);
-  try {
-    const cs = getComputedStyle(root);
-    const read = (n) => cs.getPropertyValue(n).trim();
-    return fn({
-      surface: read('--surface-1'),
-      page: read('--page'),
-      series: [read('--series-1'), read('--series-2'), read('--series-3')].filter(Boolean),
-      ramp: [1, 2, 3, 4, 5].map((i) => read(`--seq-${i}`)).filter(Boolean),
-    });
-  } finally {
-    if (before) root.setAttribute('data-theme', before);
-    else root.removeAttribute('data-theme');
-  }
+/**
+ * Read the real tokens out of the stylesheet rather than restating the hex
+ * values here — a copy kept in the test file would drift and keep passing.
+ */
+function tokens() {
+  const cs = getComputedStyle(document.documentElement);
+  const read = (n) => cs.getPropertyValue(n).trim();
+  return {
+    surface: read('--surface-1'),
+    ink: read('--text-primary'),
+    series: [read('--series-1'), read('--series-2'), read('--series-3')].filter(Boolean),
+    ramp: [1, 2, 3, 4, 5].map((i) => read(`--seq-${i}`)).filter(Boolean),
+  };
 }
 
-for (const t of THEMES) {
-  test(`${t.label}: series colours are tellable apart`, () => {
-    withTheme(t.id, (tok) => {
-      ok(tok.series.length >= 2, `only found ${tok.series.length} series colours`);
-      const { ok: passed, problems } = checkCategorical(tok.series, tok.surface);
-      ok(passed, problems.filter((p) => p.startsWith('FAIL')).join(' · '));
-    });
-  });
+test('series colours are tellable apart', () => {
+  const tok = tokens();
+  ok(tok.series.length >= 2, `only found ${tok.series.length} series colours`);
+  const { ok: passed, problems } = checkCategorical(tok.series, tok.surface);
+  ok(passed, problems.filter((p) => p.startsWith('FAIL')).join(' · '));
+});
 
-  test(`${t.label}: the heatmap ramp reads light to dark`, () => {
-    withTheme(t.id, (tok) => {
-      eq(tok.ramp.length, 5, 'expected five ramp steps');
-      const { ok: passed, problems } = checkRamp(tok.ramp, tok.surface);
-      ok(passed, problems.filter((p) => p.startsWith('FAIL')).join(' · '));
-    });
-  });
+test('the heatmap ramp reads light to dark', () => {
+  const tok = tokens();
+  eq(tok.ramp.length, 5, 'expected five ramp steps');
+  const { ok: passed, problems } = checkRamp(tok.ramp, tok.surface);
+  ok(passed, problems.filter((p) => p.startsWith('FAIL')).join(' · '));
+});
 
-  test(`${t.label}: body text is readable on the card`, () => {
-    withTheme(t.id, (tok) => {
-      const cs = getComputedStyle(document.documentElement);
-      const ink = cs.getPropertyValue('--text-primary').trim();
-      const ratio = contrast(ink, tok.surface);
-      ok(ratio >= 4.5, `text is ${ratio.toFixed(2)}:1 on the card — needs 4.5:1`);
-    });
-  });
-}
+test('body text is readable on the card', () => {
+  const tok = tokens();
+  const ratio = contrast(tok.ink, tok.surface);
+  ok(ratio >= 4.5, `text is ${ratio.toFixed(2)}:1 on the card — needs 4.5:1`);
+});
 
 test('the checks would actually fail a bad palette', () => {
   // A guard that cannot fail is decoration. Two colours a red-green colour
