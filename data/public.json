@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-08-20",
+  "generated": "2026-08-21",
   "totals": {
     "tracked": 975,
     "read": 949,
@@ -438,27 +438,27 @@
     "all": [
       {
         "name": "Romantic comedy",
-        "count": 167
+        "count": 168
       },
       {
         "name": "Romance",
-        "count": 68
+        "count": 69
       },
       {
         "name": "Fiction",
-        "count": 31
-      },
-      {
-        "name": "Business",
-        "count": 28
+        "count": 35
       },
       {
         "name": "Science",
-        "count": 28
+        "count": 30
+      },
+      {
+        "name": "Business",
+        "count": 29
       },
       {
         "name": "Memoir",
-        "count": 26
+        "count": 27
       },
       {
         "name": "Self-help",
@@ -540,7 +540,7 @@
     "2024": [
       {
         "name": "Romantic comedy",
-        "count": 75
+        "count": 76
       },
       {
         "name": "Romance",
@@ -571,9 +571,48 @@
         "count": 4
       }
     ],
-    "2023": [],
-    "2022": [],
-    "2021": [],
+    "2023": [
+      {
+        "name": "Fiction",
+        "count": 2
+      },
+      {
+        "name": "Science",
+        "count": 2
+      },
+      {
+        "name": "Business",
+        "count": 1
+      },
+      {
+        "name": "Cooking",
+        "count": 1
+      },
+      {
+        "name": "Essays",
+        "count": 1
+      },
+      {
+        "name": "History",
+        "count": 1
+      },
+      {
+        "name": "Memoir",
+        "count": 1
+      }
+    ],
+    "2022": [
+      {
+        "name": "Romance",
+        "count": 1
+      }
+    ],
+    "2021": [
+      {
+        "name": "Fiction",
+        "count": 2
+      }
+    ],
     "2018": []
   },
   "heat": {
@@ -706,7 +745,7 @@
           0,
           0,
           0,
-          75,
+          76,
           68,
           24
         ]
@@ -716,7 +755,7 @@
         "values": [
           0,
           0,
-          0,
+          1,
           0,
           24,
           33,
@@ -727,24 +766,12 @@
         "name": "Fiction",
         "values": [
           0,
+          2,
           0,
-          0,
-          0,
+          2,
           5,
           11,
           15
-        ]
-      },
-      {
-        "name": "Business",
-        "values": [
-          0,
-          0,
-          0,
-          0,
-          5,
-          19,
-          4
         ]
       },
       {
@@ -753,10 +780,22 @@
           0,
           0,
           0,
-          0,
+          2,
           6,
           13,
           9
+        ]
+      },
+      {
+        "name": "Business",
+        "values": [
+          0,
+          0,
+          0,
+          1,
+          5,
+          19,
+          4
         ]
       },
       {
@@ -765,7 +804,7 @@
           0,
           0,
           0,
-          0,
+          1,
           6,
           12,
           8
@@ -774,7 +813,7 @@
     ]
   },
   "genreCoverage": {
-    "tagged": 356,
+    "tagged": 365,
     "total": 466,
     "noIsbn": 129
   },
@@ -875,8 +914,8 @@
     },
     {
       "name": "Romance",
-      "count": 45,
-      "avg": 3.56
+      "count": 46,
+      "avg": 3.59
     },
     {
       "name": "Mystery",
