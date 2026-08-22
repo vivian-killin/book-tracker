@@ -74,15 +74,42 @@ function hideTip() {
  * Attach hover + keyboard focus to a mark, so pointer and keyboard users
  * reach the same value.
  */
+/**
+ * True on a touch screen. A tap there fires a synthetic mousemove but never a
+ * mouseleave, so a hover tooltip appears and then sits on top of the page
+ * forever. Touch devices get the table view instead, which every chart has.
+ */
+const HOVERS = window.matchMedia('(hover: hover)').matches;
+
+// Whatever is showing, a scroll means the reader has moved on.
+window.addEventListener('scroll', () => hideTip(), { passive: true });
+
 function bindTip(node, html) {
-  node.addEventListener('mousemove', (e) => showTip(e, html));
-  node.addEventListener('mouseleave', hideTip);
+  if (HOVERS) {
+    node.addEventListener('mousemove', (e) => showTip(e, html));
+    node.addEventListener('mouseleave', hideTip);
+  }
+  // Keyboard focus reaches the same value either way, and blur always fires.
   node.setAttribute('tabindex', '0');
   node.addEventListener('focus', (e) => {
     const box = e.target.getBoundingClientRect();
     showTip({ clientX: box.left + box.width / 2, clientY: box.top }, html);
   });
   node.addEventListener('blur', hideTip);
+}
+
+/**
+ * The rendered size of chart text, in viewBox units.
+ *
+ * Set in CSS so one media query moves both the type and the space reserved for
+ * it. Reading it back is what stops the two disagreeing — a gutter sized for
+ * 11px type clipped 26px labels straight off the edge of the SVG.
+ */
+function chartFontPx() {
+  const v = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--chart-axis-px'),
+  );
+  return Number.isFinite(v) && v > 0 ? v : 11;
 }
 
 /** Path for a bar with a rounded data-end and a square baseline. */
@@ -312,15 +339,25 @@ export function lineChart(container, { labels, series, ariaLabel = '' }) {
 // ---------------------------------------------------------------------------
 
 /**
+ * An item may carry a `note` — a detail that belongs in the tooltip rather
+ * than the axis. Packing it into the label instead is what turned
+ * "Romantic comedy (94)" into "Romantic comedy (9…" on a phone.
+ *
  * @param {HTMLElement} container
- * @param {{items: {label: string, value: number}[], unit?: string, ariaLabel?: string}} data
+ * @param {{items: {label: string, value: number, note?: string}[], unit?: string, ariaLabel?: string}} data
  */
 export function barChart(container, { items, unit = '', ariaLabel = '' }) {
-  const rowH = 30;
+  const font = chartFontPx();
+  const rowH = Math.max(30, font * 1.5);
   const W = 720;
-  const M = { top: 8, right: 48, bottom: 8, left: 190 };
+  // Reserve the gutter from the actual type size rather than a constant, and
+  // cap it so the bars keep most of the width.
+  const gutter = Math.min(300, Math.max(190, Math.round(font * 11)));
+  const M = { top: 8, right: 48, bottom: 8, left: gutter };
   const H = M.top + M.bottom + items.length * rowH;
   const plotW = W - M.left - M.right;
+  // Roughly 0.52em per character in this face; leave a little breathing room.
+  const maxChars = Math.max(8, Math.floor((gutter - 16) / (font * 0.52)));
 
   const svg = svgRoot(container, W, Math.max(H, 40));
   svg.setAttribute('aria-label', ariaLabel);
@@ -336,12 +373,13 @@ export function barChart(container, { items, unit = '', ariaLabel = '' }) {
       x: 0, y: M.top + i * rowH, width: W, height: rowH,
       fill: 'transparent', class: 'hit',
     }, svg);
-    bindTip(hit, `<strong>${d.label}</strong><br>${d.value} ${unit}`.trim());
+    bindTip(hit, `<strong>${d.label}</strong><br>${d.value} ${unit}`.trim()
+      + (d.note ? `<br>${d.note}` : ''));
 
     el('text', {
       x: M.left - 12, y: y + barH / 2 + 4, 'text-anchor': 'end',
       class: 'axis-text', 'pointer-events': 'none',
-    }, svg).textContent = truncate(d.label, 26);
+    }, svg).textContent = truncate(d.label, maxChars);
 
     // Rotated bar path: rounded at the value end, square at the baseline.
     el('path', {

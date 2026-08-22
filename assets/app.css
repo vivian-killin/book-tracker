@@ -217,17 +217,24 @@ a { color: var(--accent); }
 .ramp-swatch { width: 22px; height: 10px; border-radius: 2px; display: inline-block; }
 .ramp-end { margin: 0 6px; }
 
+/*
+ * Chart type size lives in a custom property because the charts need it too:
+ * they size the label gutter from it, and a gutter that disagrees with the
+ * font clips the labels off the edge of the SVG.
+ */
+:root { --chart-axis-px: 11; --chart-value-px: 11; }
+
 /* SVG text always wears text tokens, never a series color. */
 .axis-text {
   fill: var(--text-muted);
-  font-size: 11px;
+  font-size: calc(var(--chart-axis-px) * 1px);
   font-family: var(--font);
   font-variant-numeric: tabular-nums;
 }
 
 .value-label {
   fill: var(--text-secondary);
-  font-size: 11px;
+  font-size: calc(var(--chart-value-px) * 1px);
   font-weight: 600;
   font-family: var(--font);
 }
@@ -453,8 +460,7 @@ table.data tbody tr:hover { background: var(--page); }
    * on the desktop it was measured on, and unreadable on a phone. These sizes
    * are in viewBox units and land back at roughly 10-11px on screen.
    */
-  .axis-text { font-size: 26px; }
-  .value-label { font-size: 28px; }
+  :root { --chart-axis-px: 26; --chart-value-px: 28; }
   .multiple .axis-text { font-size: 15px; }
 
   /*
@@ -473,6 +479,8 @@ table.data tbody tr:hover { background: var(--page); }
     width: auto;
     min-width: 540px;
   }
+  /* The heatmap keeps its natural size, so its text must not be scaled up
+     with the charts that shrink. */
   .chart-scroll .axis-text { font-size: 12px; }
 
   .card { padding: 16px 14px 18px; }

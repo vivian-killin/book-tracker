@@ -11,6 +11,13 @@
  */
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+/*
+ * Touch screens have no cursor to follow. They do fire a synthetic mousemove
+ * on tap, though, which left the butterflies frozen mid-page — so they are
+ * skipped outright rather than relying on the event never arriving.
+ */
+const HOVERS = window.matchMedia('(hover: hover)').matches;
 const WINGS = ['#ff8ec9', '#ffd166', '#c084fc'];
 
 let layer = null;
@@ -48,7 +55,7 @@ function build() {
 }
 
 function onMove(e) {
-  if (reduced.matches) return;
+  if (reduced.matches || !HOVERS) return;
   build();
 
   flock.forEach((el, i) => {
@@ -85,6 +92,7 @@ function teardown() {
 
 /** Start the cursor decoration. Safe to call on a page that never sees a mouse. */
 export function init() {
+  if (!HOVERS) return;
   window.addEventListener('mousemove', onMove, { passive: true });
   reduced.addEventListener('change', () => {
     if (reduced.matches) teardown();

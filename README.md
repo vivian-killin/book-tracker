@@ -268,11 +268,18 @@ than wrapping into four rows of chrome above the reading.
 
 Chart text is sized in viewBox units, so it shrinks with the chart: an 11px
 label on a 720-wide chart renders at about 5px on a 375px screen — fine on the
-desktop it was measured on, unreadable on a phone. The scaled charts declare
-larger type on small screens so it lands back near 11px. The heatmap cannot
-shrink at all (squeezed, it ran the months together into "JanFebMar" and
-clipped "2018" to "018"), so it keeps its natural size and scrolls sideways
-inside its card.
+desktop it was measured on, unreadable on a phone. The size lives in
+`--chart-axis-px` so one media query moves both the type and the space
+reserved for it; the charts read it back, because a gutter sized for 11px type
+clips 26px labels off the edge of the SVG. The heatmap cannot shrink at all
+(squeezed, it ran the months together into "JanFebMar" and clipped "2018" to
+"018"), so it keeps its natural size and scrolls sideways inside its card.
+
+Tooltips and the cursor butterflies are for pointers only. A tap on a touch
+screen fires a synthetic `mousemove` and never a `mouseleave`, so a hover
+tooltip appeared and then sat over the page permanently, and the butterflies
+froze mid-screen. Both are skipped when `(hover: hover)` does not match, and
+every chart has a table view that carries the same numbers.
 
 ## Notes on the charts
 

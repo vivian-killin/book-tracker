@@ -763,7 +763,11 @@ function renderGenreRatingCard() {
     'Fewer than that is noise dressed up as a finding.';
 
   barChart($('genreRatingChart'), {
-    items: items.map((g) => ({ label: `${g.name} (${g.count})`, value: g.avg })),
+    // The rated count rides in the tooltip and the table, not the axis label —
+    // on a phone it pushed the genre name off the edge.
+    items: items.map((g) => ({
+      label: g.name, value: g.avg, note: `${g.count} rated`,
+    })),
     unit: 'stars', ariaLabel: 'Average rating by genre',
   });
 
