@@ -2,15 +2,15 @@
   "version": 1,
   "generated": "2026-09-06",
   "totals": {
-    "tracked": 975,
-    "read": 949,
-    "dated": 466,
+    "tracked": 989,
+    "read": 964,
+    "dated": 481,
     "undated": 483,
-    "pages": 154014,
-    "pagesCounted": 460,
-    "authors": 317,
-    "rated": 314,
-    "avgRating": 3.7229299363057327,
+    "pages": 158996,
+    "pagesCounted": 475,
+    "authors": 328,
+    "rated": 329,
+    "avgRating": 3.711246200607903,
     "longestPages": 757
   },
   "years": [
@@ -24,13 +24,13 @@
   ],
   "perYear": {
     "2026": {
-      "books": 104,
-      "pages": 31582,
-      "authors": 95,
-      "rated": 104,
-      "avgRating": 3.6923076923076925,
+      "books": 119,
+      "pages": 36564,
+      "authors": 109,
+      "rated": 119,
+      "avgRating": 3.6638655462184873,
       "medianDays": null,
-      "pagesCounted": 103,
+      "pagesCounted": 118,
       "longestPages": 560
     },
     "2025": {
@@ -103,8 +103,8 @@
       16,
       5,
       12,
+      15,
       5,
-      0,
       0,
       0,
       0
@@ -197,17 +197,17 @@
   "ratings": {
     "all": [
       1,
-      13,
-      110,
-      138,
-      52
+      15,
+      116,
+      143,
+      54
     ],
     "2026": [
       0,
-      4,
-      38,
-      48,
-      14
+      6,
+      44,
+      53,
+      16
     ],
     "2025": [
       1,
@@ -305,6 +305,10 @@
         "count": 2
       },
       {
+        "name": "Jillian Meadows",
+        "count": 2
+      },
+      {
         "name": "Kate Clayborn",
         "count": 2
       },
@@ -314,10 +318,6 @@
       },
       {
         "name": "Suzanne Collins",
-        "count": 2
-      },
-      {
-        "name": "Tessa Bailey",
         "count": 2
       }
     ],
@@ -438,31 +438,31 @@
     "all": [
       {
         "name": "Romantic comedy",
-        "count": 168
+        "count": 174
       },
       {
         "name": "Romance",
-        "count": 69
+        "count": 71
       },
       {
         "name": "Fiction",
-        "count": 35
+        "count": 36
+      },
+      {
+        "name": "Business",
+        "count": 32
+      },
+      {
+        "name": "Memoir",
+        "count": 30
       },
       {
         "name": "Science",
         "count": 30
       },
       {
-        "name": "Business",
-        "count": 29
-      },
-      {
-        "name": "Memoir",
-        "count": 27
-      },
-      {
         "name": "Self-help",
-        "count": 20
+        "count": 22
       },
       {
         "name": "Historical fiction",
@@ -472,14 +472,18 @@
     "2026": [
       {
         "name": "Romantic comedy",
-        "count": 24
+        "count": 30
       },
       {
         "name": "Fiction",
-        "count": 15
+        "count": 16
       },
       {
         "name": "Romance",
+        "count": 13
+      },
+      {
+        "name": "Memoir",
         "count": 11
       },
       {
@@ -487,19 +491,15 @@
         "count": 9
       },
       {
-        "name": "Memoir",
-        "count": 8
-      },
-      {
         "name": "Business",
-        "count": 4
-      },
-      {
-        "name": "Psychology",
-        "count": 4
+        "count": 7
       },
       {
         "name": "Self-help",
+        "count": 6
+      },
+      {
+        "name": "Psychology",
         "count": 4
       }
     ],
@@ -718,8 +718,8 @@
         16,
         5,
         12,
+        15,
         5,
-        0,
         0,
         0,
         0
@@ -747,7 +747,7 @@
           0,
           76,
           68,
-          24
+          30
         ]
       },
       {
@@ -759,7 +759,7 @@
           0,
           24,
           33,
-          11
+          13
         ]
       },
       {
@@ -771,7 +771,31 @@
           2,
           5,
           11,
-          15
+          16
+        ]
+      },
+      {
+        "name": "Business",
+        "values": [
+          0,
+          0,
+          0,
+          1,
+          5,
+          19,
+          7
+        ]
+      },
+      {
+        "name": "Memoir",
+        "values": [
+          0,
+          0,
+          0,
+          1,
+          6,
+          12,
+          11
         ]
       },
       {
@@ -785,50 +809,26 @@
           13,
           9
         ]
-      },
-      {
-        "name": "Business",
-        "values": [
-          0,
-          0,
-          0,
-          1,
-          5,
-          19,
-          4
-        ]
-      },
-      {
-        "name": "Memoir",
-        "values": [
-          0,
-          0,
-          0,
-          1,
-          6,
-          12,
-          8
-        ]
       }
     ]
   },
   "genreCoverage": {
-    "tagged": 365,
-    "total": 466,
-    "noIsbn": 129
+    "tagged": 378,
+    "total": 481,
+    "noIsbn": 131
   },
   "lengths": [
     {
       "name": "Under 200",
-      "count": 34
+      "count": 35
     },
     {
       "name": "200–299",
-      "count": 80
+      "count": 82
     },
     {
       "name": "300–399",
-      "count": 258
+      "count": 270
     },
     {
       "name": "400–499",
@@ -842,19 +842,19 @@
   "ages": [
     {
       "name": "Same year",
-      "count": 261
+      "count": 267
     },
     {
       "name": "1 year",
-      "count": 84
+      "count": 85
     },
     {
       "name": "2–3 years",
-      "count": 41
+      "count": 46
     },
     {
       "name": "4–9 years",
-      "count": 55
+      "count": 58
     },
     {
       "name": "10+ years",
@@ -864,8 +864,8 @@
   "ratingByGenre": [
     {
       "name": "Memoir",
-      "count": 21,
-      "avg": 4.43
+      "count": 24,
+      "avg": 4.38
     },
     {
       "name": "Science",
@@ -884,13 +884,13 @@
     },
     {
       "name": "Self-help",
-      "count": 16,
-      "avg": 4.19
+      "count": 18,
+      "avg": 4.11
     },
     {
       "name": "Business",
-      "count": 23,
-      "avg": 4.09
+      "count": 26,
+      "avg": 4.08
     },
     {
       "name": "Historical fiction",
@@ -899,8 +899,8 @@
     },
     {
       "name": "Fiction",
-      "count": 27,
-      "avg": 3.89
+      "count": 28,
+      "avg": 3.86
     },
     {
       "name": "Thriller",
@@ -909,13 +909,13 @@
     },
     {
       "name": "Essays",
-      "count": 4,
-      "avg": 3.75
+      "count": 5,
+      "avg": 3.6
     },
     {
       "name": "Romance",
-      "count": 46,
-      "avg": 3.59
+      "count": 48,
+      "avg": 3.58
     },
     {
       "name": "Mystery",
@@ -924,7 +924,7 @@
     },
     {
       "name": "Romantic comedy",
-      "count": 94,
+      "count": 100,
       "avg": 3.45
     },
     {
