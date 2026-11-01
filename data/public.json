@@ -2,15 +2,15 @@
   "version": 1,
   "generated": "2026-11-01",
   "totals": {
-    "tracked": 990,
-    "read": 965,
-    "dated": 485,
-    "undated": 480,
-    "pages": 160119,
-    "pagesCounted": 478,
-    "authors": 329,
-    "rated": 331,
-    "avgRating": 3.719033232628399,
+    "tracked": 1013,
+    "read": 987,
+    "dated": 509,
+    "undated": 478,
+    "pages": 169003,
+    "pagesCounted": 503,
+    "authors": 339,
+    "rated": 356,
+    "avgRating": 3.735252808988764,
     "longestPages": 757
   },
   "years": [
@@ -24,13 +24,13 @@
   ],
   "perYear": {
     "2026": {
-      "books": 124,
-      "pages": 38082,
-      "authors": 110,
-      "rated": 122,
-      "avgRating": 3.6885245901639343,
+      "books": 148,
+      "pages": 46966,
+      "authors": 128,
+      "rated": 147,
+      "avgRating": 3.7329931972789114,
       "medianDays": null,
-      "pagesCounted": 122,
+      "pagesCounted": 147,
       "longestPages": 560
     },
     "2025": {
@@ -104,9 +104,9 @@
       5,
       12,
       15,
-      5,
-      0,
-      0,
+      13,
+      15,
+      1,
       0
     ],
     "2025": [
@@ -198,16 +198,16 @@
     "all": [
       1,
       15,
-      116,
-      143,
-      56
+      120,
+      161,
+      59
     ],
     "2026": [
       0,
       6,
-      44,
-      54,
-      18
+      48,
+      72,
+      21
     ],
     "2025": [
       1,
@@ -256,11 +256,11 @@
     "all": [
       {
         "name": "Ali Hazelwood",
-        "count": 8
+        "count": 9
       },
       {
         "name": "Abby Jimenez",
-        "count": 7
+        "count": 8
       },
       {
         "name": "Lauren Layne",
@@ -275,15 +275,15 @@
         "count": 6
       },
       {
+        "name": "Lynn Painter",
+        "count": 6
+      },
+      {
+        "name": "Rebecca Yarros",
+        "count": 6
+      },
+      {
         "name": "Amy  Lea",
-        "count": 5
-      },
-      {
-        "name": "Falon Ballard",
-        "count": 5
-      },
-      {
-        "name": "Katherine Center",
         "count": 5
       }
     ],
@@ -297,6 +297,14 @@
         "count": 3
       },
       {
+        "name": "Abby Jimenez",
+        "count": 2
+      },
+      {
+        "name": "Ali  Rosen",
+        "count": 2
+      },
+      {
         "name": "B.K. Borison",
         "count": 2
       },
@@ -305,19 +313,11 @@
         "count": 2
       },
       {
+        "name": "Ellen O'Clover",
+        "count": 2
+      },
+      {
         "name": "Falon Ballard",
-        "count": 2
-      },
-      {
-        "name": "Jillian Meadows",
-        "count": 2
-      },
-      {
-        "name": "Kate Clayborn",
-        "count": 2
-      },
-      {
-        "name": "Rachel  Reid",
         "count": 2
       }
     ],
@@ -438,26 +438,26 @@
     "all": [
       {
         "name": "Romantic comedy",
-        "count": 178
+        "count": 185
       },
       {
         "name": "Romance",
-        "count": 71
+        "count": 77
       },
       {
         "name": "Fiction",
-        "count": 36
+        "count": 41
       },
       {
         "name": "Business",
-        "count": 32
-      },
-      {
-        "name": "Memoir",
-        "count": 30
+        "count": 33
       },
       {
         "name": "Science",
+        "count": 31
+      },
+      {
+        "name": "Memoir",
         "count": 30
       },
       {
@@ -472,15 +472,15 @@
     "2026": [
       {
         "name": "Romantic comedy",
-        "count": 34
+        "count": 41
       },
       {
         "name": "Fiction",
-        "count": 16
+        "count": 21
       },
       {
         "name": "Romance",
-        "count": 13
+        "count": 19
       },
       {
         "name": "Memoir",
@@ -488,11 +488,11 @@
       },
       {
         "name": "Science",
-        "count": 9
+        "count": 10
       },
       {
         "name": "Business",
-        "count": 7
+        "count": 8
       },
       {
         "name": "Self-help",
@@ -719,9 +719,9 @@
         5,
         12,
         15,
-        5,
-        0,
-        0,
+        13,
+        15,
+        1,
         0
       ]
     ],
@@ -747,7 +747,7 @@
           0,
           76,
           68,
-          34
+          41
         ]
       },
       {
@@ -759,7 +759,7 @@
           0,
           24,
           33,
-          13
+          19
         ]
       },
       {
@@ -771,7 +771,7 @@
           2,
           5,
           11,
-          16
+          21
         ]
       },
       {
@@ -783,7 +783,19 @@
           1,
           5,
           19,
-          7
+          8
+        ]
+      },
+      {
+        "name": "Science",
+        "values": [
+          0,
+          0,
+          0,
+          2,
+          6,
+          13,
+          10
         ]
       },
       {
@@ -797,25 +809,13 @@
           12,
           11
         ]
-      },
-      {
-        "name": "Science",
-        "values": [
-          0,
-          0,
-          0,
-          2,
-          6,
-          13,
-          9
-        ]
       }
     ]
   },
   "genreCoverage": {
-    "tagged": 382,
-    "total": 485,
-    "noIsbn": 131
+    "tagged": 403,
+    "total": 509,
+    "noIsbn": 133
   },
   "lengths": [
     {
@@ -824,15 +824,15 @@
     },
     {
       "name": "200–299",
-      "count": 82
+      "count": 88
     },
     {
       "name": "300–399",
-      "count": 273
+      "count": 284
     },
     {
       "name": "400–499",
-      "count": 72
+      "count": 80
     },
     {
       "name": "500+",
@@ -842,11 +842,11 @@
   "ages": [
     {
       "name": "Same year",
-      "count": 267
+      "count": 286
     },
     {
       "name": "1 year",
-      "count": 85
+      "count": 87
     },
     {
       "name": "2–3 years",
@@ -854,11 +854,11 @@
     },
     {
       "name": "4–9 years",
-      "count": 60
+      "count": 61
     },
     {
       "name": "10+ years",
-      "count": 25
+      "count": 27
     }
   ],
   "ratingByGenre": [
@@ -869,8 +869,8 @@
     },
     {
       "name": "Science",
-      "count": 22,
-      "avg": 4.27
+      "count": 23,
+      "avg": 4.26
     },
     {
       "name": "Psychology",
@@ -889,8 +889,8 @@
     },
     {
       "name": "Business",
-      "count": 26,
-      "avg": 4.08
+      "count": 27,
+      "avg": 4.04
     },
     {
       "name": "Historical fiction",
@@ -899,8 +899,13 @@
     },
     {
       "name": "Fiction",
-      "count": 28,
-      "avg": 3.86
+      "count": 33,
+      "avg": 3.91
+    },
+    {
+      "name": "Young adult",
+      "count": 5,
+      "avg": 3.8
     },
     {
       "name": "Thriller",
@@ -914,8 +919,13 @@
     },
     {
       "name": "Romance",
-      "count": 48,
-      "avg": 3.58
+      "count": 54,
+      "avg": 3.59
+    },
+    {
+      "name": "Romantic comedy",
+      "count": 110,
+      "avg": 3.52
     },
     {
       "name": "Mystery",
@@ -923,15 +933,10 @@
       "avg": 3.5
     },
     {
-      "name": "Romantic comedy",
-      "count": 102,
-      "avg": 3.48
-    },
-    {
       "name": "Fantasy",
-      "count": 11,
-      "avg": 3.45
+      "count": 12,
+      "avg": 3.42
     }
   ],
-  "rereads": 7
+  "rereads": 8
 }

@@ -274,6 +274,61 @@ export function matchKey(book) {
   return `ta:${norm(book.title)}|${norm(firstAuthor(book.author))}`;
 }
 
+/**
+ * Last-resort match for the same book catalogued under a longer or shorter
+ * title.
+ *
+ * Goodreads edits its own records: a book filed as "The Heartbreak Hotel: A
+ * Cozy Fall Romance" came back in a later export as plain "The Heartbreak
+ * Hotel". With no ISBN on either copy, title+author matching missed it and a
+ * re-import would have duplicated the book.
+ *
+ * Deliberately narrow: the authors must match, one normalised title must be a
+ * prefix of the other, and the shorter must be long enough that it is not
+ * matching on something like "Untitled". Anything looser starts merging
+ * genuinely different books that share an opening word.
+ *
+ * @param {Object[]} books
+ * @param {Object} book
+ * @returns {Object|undefined}
+ */
+/**
+ * Title and author alone, ignoring any ISBN.
+ *
+ * Same title by the same author is the same book — different ISBNs just mean
+ * different editions, which is not a distinction a reading log should keep.
+ *
+ * @param {Object} book
+ * @returns {string}
+ */
+function titleAuthorKey(book) {
+  const norm = (s) =>
+    String(s || '')
+      .toLowerCase()
+      .replace(/\s*[([].*?[)\]]\s*/g, ' ')
+      .replace(/[^a-z0-9]+/g, '');
+  return `${norm(book.title)}|${norm(firstAuthor(book.author))}`;
+}
+
+function matchBySubtitle(books, book) {
+  const norm = (s) =>
+    String(s || '')
+      .toLowerCase()
+      .replace(/\s*[([].*?[)\]]\s*/g, ' ')
+      .replace(/[^a-z0-9]+/g, '');
+
+  const title = norm(book.title);
+  const author = norm(firstAuthor(book.author));
+  if (title.length < 10 || !author) return undefined;
+
+  return books.find((b) => {
+    if (norm(firstAuthor(b.author)) !== author) return false;
+    const other = norm(b.title);
+    if (other.length < 10) return false;
+    return other.startsWith(title) || title.startsWith(other);
+  });
+}
+
 function firstAuthor(author) {
   return String(author || '').split(/\s*,\s*/)[0];
 }
@@ -548,8 +603,16 @@ export function exportCSV(books, format) {
  */
 export function mergeBooks(existing, incoming) {
   const byKey = new Map();
+  // A second index on title+author alone. matchKey prefers an ISBN, so a book
+  // catalogued with one on a previous export and without one on the next gets
+  // a different key each time and merges with nothing — which is exactly how
+  // two copies of "One & Only" and "Check & Mate" appeared.
+  const byTitle = new Map();
   const books = existing.map((b) => makeBook(b));
-  books.forEach((b) => byKey.set(matchKey(b), b));
+  books.forEach((b) => {
+    byKey.set(matchKey(b), b);
+    byTitle.set(titleAuthorKey(b), b);
+  });
 
   let added = 0;
   let updated = 0;
@@ -557,11 +620,14 @@ export function mergeBooks(existing, incoming) {
   for (const raw of incoming) {
     const book = makeBook(raw);
     const key = matchKey(book);
-    const current = byKey.get(key);
+    const current = byKey.get(key)
+      || byTitle.get(titleAuthorKey(book))
+      || matchBySubtitle(books, book);
 
     if (!current) {
       books.push(book);
       byKey.set(key, book);
+      byTitle.set(titleAuthorKey(book), book);
       added++;
       continue;
     }

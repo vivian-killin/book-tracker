@@ -419,6 +419,70 @@ test('merges field by field across the two services', () => {
   eq(b.moods, ['mysterious', 'reflective'], 'moods from StoryGraph');
 });
 
+test('an ISBN on only one side still merges', () => {
+  // Goodreads dropped the ISBN from a later export of the same book. matchKey
+  // prefers the ISBN, so the two copies keyed differently and duplicated.
+  const existing = [makeBook({
+    title: 'One & Only', author: 'Maurene Goo',
+    isbn13: '9780857509765', status: STATUS.READ, dateRead: '2026-02-25',
+  })];
+  const incoming = [makeBook({
+    title: 'One & Only', author: 'Maurene Goo',
+    status: STATUS.READ, dateRead: '2026-02-25', pages: 320,
+  })];
+  const { books, added, updated } = mergeBooks(existing, incoming);
+  eq(books.length, 1, 'the same book duplicated across an ISBN change');
+  eq(added, 0);
+  eq(updated, 1);
+  eq(books[0].isbn13, '9780857509765', 'the known ISBN should survive');
+  eq(books[0].pages, 320);
+});
+
+test('two editions of one book collapse to one record', () => {
+  // Different ISBNs, same title and author — an edition, not another book.
+  const { books } = mergeBooks(
+    [makeBook({ title: 'Little Fires Everywhere', author: 'Celeste Ng', isbn13: '9780735224292' })],
+    [makeBook({ title: 'Little Fires Everywhere', author: 'Celeste Ng', isbn13: '9780143135166' })],
+  );
+  eq(books.length, 1);
+});
+
+test('a re-titled book merges instead of duplicating', () => {
+  // Goodreads shortened "The Heartbreak Hotel: A Cozy Fall Romance" to
+  // "The Heartbreak Hotel" between exports, and neither copy carries an ISBN.
+  const existing = [makeBook({
+    title: 'The Heartbreak Hotel: A Cozy Fall Romance', author: "Ellen O'Clover",
+    status: STATUS.READ, dateRead: '2026-01-04',
+  })];
+  const incoming = [makeBook({
+    title: 'The Heartbreak Hotel', author: "Ellen O'Clover",
+    status: STATUS.READ, dateRead: '2026-01-04', pages: 352,
+  })];
+  const { books, added, updated } = mergeBooks(existing, incoming);
+  eq(books.length, 1, 'the shortened title duplicated the book');
+  eq(added, 0);
+  eq(updated, 1);
+  eq(books[0].pages, 352, 'the new detail should still merge in');
+});
+
+test('the prefix match does not merge different books', () => {
+  // Same author, same opening words, genuinely different books.
+  const { books } = mergeBooks(
+    [makeBook({ title: 'The Hunger Games', author: 'Suzanne Collins' })],
+    [makeBook({ title: 'The Ballad of Songbirds and Snakes', author: 'Suzanne Collins' })],
+  );
+  eq(books.length, 2, 'two different books were merged into one');
+});
+
+test('a short title cannot match by prefix', () => {
+  // "Kin" must not swallow "Kindred" just because one starts with the other.
+  const { books } = mergeBooks(
+    [makeBook({ title: 'Kin', author: 'A Writer' })],
+    [makeBook({ title: 'Kindred Spirits Forever', author: 'A Writer' })],
+  );
+  eq(books.length, 2, 'a three-letter title matched by prefix');
+});
+
 test('merging adds genuinely new books', () => {
   const { books, added } = mergeBooks(
     importCSV(GOODREADS_SAMPLE).books,
